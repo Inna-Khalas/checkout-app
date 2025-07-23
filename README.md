@@ -21,7 +21,7 @@ This is a responsive checkout application for a transportation service, with rou
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/checkout-app.git
+git clone https://github.com/Inna-Khalas/checkout-app.git
 cd checkout-app
 ```
 
