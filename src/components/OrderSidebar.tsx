@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { getRouteDistance } from "@/utils/getRouteDistance";
 import { useFormContext } from "react-hook-form";
 import { CheckoutFormValues } from "@/app/checkout/page";
-import { MapPin } from "lucide-react";
 
 interface Props {
   pricePerKm: number;
@@ -88,7 +87,12 @@ export const OrderSidebar = ({ pricePerKm, routePoints }: Props) => {
               Ecological cleaning and maintenance services for home
             </h3>
             <div className="text-xs text-gray-500 mt-1 flex items-center gap-1">
-              <MapPin size={12} className="text-orange-500" />
+              <Image
+                src="/location.svg"
+                alt="location"
+                width={17}
+                height={22}
+              />{" "}
               <span className="text-[11px]">Bangkok</span> • ⚡ 5.0
             </div>
             <div className="text-sm text-orange-600 font-bold mt-1">

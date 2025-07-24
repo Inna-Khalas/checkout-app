@@ -18,11 +18,25 @@ export const AboutTheCargo = () => {
       </h2>
 
       <div className="grid md:grid-cols-2 gap-4">
-        <div>
+        <div className="relative">
           <label className="block text-gray-500 text-sm font-medium mb-1">
             Date of upload <span className="text-pink-500">*</span>
           </label>
-          <input type="date" {...register("date")} className="input" />
+
+          <input
+            type="date"
+            {...register("date")}
+            className="input w-full appearance-none"
+          />
+
+          <Image
+            src="/calendar.svg"
+            alt="calendar"
+            width={20}
+            height={20}
+            className="absolute right-2 top-11 -translate-y-1/2 pointer-events-none"
+          />
+
           {errors.date && (
             <p className="text-sm text-red-500 mt-1">{errors.date.message}</p>
           )}

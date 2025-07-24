@@ -1,20 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useState, useEffect } from "react";
+import { useFormContext, useWatch } from "react-hook-form";
 import { CheckoutFormValues } from "@/app/checkout/page";
 import { Pencil } from "lucide-react";
 import Image from "next/image";
 
 export const ContactInformation = () => {
   const [editing, setEditing] = useState(false);
+  const [isEditingValid, setIsEditingValid] = useState(false);
+
   const {
     register,
     formState: { errors },
     getValues,
+    trigger,
+    setValue,
+    control,
   } = useFormContext<CheckoutFormValues>();
-
-  const values = getValues();
 
   const defaultValues = {
     name: "Marvin McKinney",
@@ -22,10 +25,31 @@ export const ContactInformation = () => {
     phone: "+66123456789",
   };
 
+  const values = getValues();
   const displayValues = {
     name: values.name || defaultValues.name,
     email: values.email || defaultValues.email,
     phone: values.phone || defaultValues.phone,
+  };
+
+  const [watchedName, watchedEmail, watchedPhone] = useWatch({
+    control,
+    name: ["name", "email", "phone"],
+  });
+
+  useEffect(() => {
+    const validate = async () => {
+      const valid = await trigger(["name", "email", "phone"]);
+      setIsEditingValid(valid);
+    };
+    validate();
+  }, [watchedName, watchedEmail, watchedPhone, trigger]);
+
+  const handleStartEditing = async () => {
+    setValue("name", displayValues.name);
+    setValue("email", displayValues.email);
+    setValue("phone", displayValues.phone);
+    setEditing(true);
   };
 
   return (
@@ -37,38 +61,55 @@ export const ContactInformation = () => {
 
       {editing ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <input
-            type="text"
-            placeholder="Full name"
-            {...register("name")}
-            defaultValue={defaultValues.name}
-            className="input"
-          />
-          <input
-            type="tel"
-            placeholder="Phone number"
-            {...register("phone")}
-            defaultValue={defaultValues.phone}
-            className="input"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            {...register("email")}
-            defaultValue={defaultValues.email}
-            className="input"
-          />
-          <input
-            type="text"
-            placeholder="Company"
-            {...register("company")}
-            className="input"
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="Full name"
+              {...register("name")}
+              className="input"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              type="tel"
+              placeholder="Phone number"
+              {...register("phone")}
+              className="input"
+            />
+            {errors.phone && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.phone.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              {...register("email")}
+              className="input"
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
 
           <button
             type="button"
+            disabled={!isEditingValid}
             onClick={() => setEditing(false)}
-            className="sm:col-span-2 bg-pink-600 text-white py-2 px-4 rounded-md font-medium mt-2 w-full sm:w-auto"
+            className={`sm:col-span-2 py-2 px-4 rounded-md font-medium mt-2 w-full sm:w-auto transition-all ${
+              isEditingValid
+                ? "bg-pink-600 text-white hover:bg-pink-700"
+                : "bg-gray-300 text-gray-400 cursor-not-allowed"
+            }`}
           >
             Save
           </button>
@@ -94,7 +135,7 @@ export const ContactInformation = () => {
 
           <button
             type="button"
-            onClick={() => setEditing(true)}
+            onClick={handleStartEditing}
             className="absolute top-4 right-4 bg-pink-600 text-white px-3 py-1.5 text-sm rounded-md flex items-center gap-1 shadow-sm hover:bg-pink-700"
           >
             <Pencil size={14} />

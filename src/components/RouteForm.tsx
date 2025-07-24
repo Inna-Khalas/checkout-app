@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
-import { useFormContext, useFieldArray } from "react-hook-form";
+import { useFormContext, useFieldArray, Controller } from "react-hook-form";
 import { Trash2 } from "lucide-react";
 import { CheckoutFormValues } from "@/app/checkout/page";
 import Image from "next/image";
+import "react-clock/dist/Clock.css";
+import TimePicker from "react-time-picker";
 
 const pointLabels = [
   "Download location",
@@ -40,18 +42,28 @@ const RouteForm = () => {
               {pointLabels[index] || "Additional point"}
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {/* Location */}
-              <div className="relative">
+              <div className="relative sm:col-span-2">
                 <label className="block text-xs font-medium text-gray-700 mb-1">
                   Point {String.fromCharCode(65 + index)}{" "}
                   <span className="text-pink-500">*</span>
                 </label>
+
                 <input
                   {...register(`points.${index}.location` as const)}
-                  placeholder="Thailand, Phuket, Rat Burana..."
-                  className="input pl-10 w-full"
+                  placeholder="Thailand, Phuket..."
+                  className="input pl-4 pr-10 w-full"
                 />
+
+                <Image
+                  src="/map.svg"
+                  alt="map"
+                  width={20}
+                  height={20}
+                  className="absolute right-2 top-10 -translate-y-1/2 pointer-events-none"
+                />
+
                 {errors.points?.[index]?.location && (
                   <p className="text-xs text-red-500 mt-1">
                     {errors.points[index]?.location?.message}
@@ -59,15 +71,33 @@ const RouteForm = () => {
                 )}
               </div>
 
+              {/* Time with mask */}
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">
                   Operating time (hour) <span className="text-pink-500">*</span>
                 </label>
-                <input
-                  type="time"
-                  {...register(`points.${index}.time` as const)}
-                  className="input w-full"
+                <Controller
+                  control={control}
+                  name={`points.${index}.time`}
+                  render={({ field }) => (
+                    <TimePicker
+                      {...field}
+                      onChange={(value) => field.onChange(value || "")}
+                      value={field.value || ""}
+                      format="HH:mm"
+                      disableClock={true}
+                      clearIcon={null}
+                      clockIcon={null}
+                      className="w-full"
+                    />
+                  )}
                 />
+
+                {errors.points?.[index]?.time && (
+                  <p className="text-xs text-red-500 mt-1">
+                    {errors.points[index]?.time?.message}
+                  </p>
+                )}
               </div>
             </div>
 

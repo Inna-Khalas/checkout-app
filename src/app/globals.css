@@ -1,4 +1,48 @@
 @import "tailwindcss";
+
+.react-time-picker {
+  width: 100%;
+}
+
+.react-time-picker__wrapper {
+  @apply w-full border border-[#EAEAEA] rounded-lg px-4 py-2 text-sm placeholder:text-[#B3B3B3] focus:outline-none focus:ring-2 focus:ring-pink-200;
+}
+
+.react-time-picker__inputGroup__input {
+  @apply text-sm text-gray-800 w-12 text-center;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.react-time-picker__button {
+  display: none;
+}
+
+.react-time-picker__inputGroup__divider {
+  padding: 0 3px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* globals.css */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
 /* 
 :root {
   --background: #ffffff;

@@ -1,15 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import {
-  Gift,
-  Grid2x2,
-  Bell,
-  MessageCircle,
-  Plus,
-  Search,
-  Menu,
-} from "lucide-react";
+import { Grid2x2, Plus, Search, Menu } from "lucide-react";
 
 export const Header = () => {
   return (
@@ -39,20 +31,20 @@ export const Header = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-4">
-          <button className="flex items-center gap-1 text-sm text-pink-600 font-medium">
-            <Gift className="w-4 h-4" />
+          <button className="flex items-center gap-1 text-sm font-medium bg-gradient-to-r from-orange-500 via-pink-500 to-fuchsia-600 bg-clip-text text-transparent">
+            <Image src="/present.svg" alt="present" width={24} height={24} />{" "}
             Give prizes
           </button>
 
           <div className="relative flex items-center">
-            <MessageCircle className="w-5 h-5 text-pink-600" />
-            <span className="absolute -top-1.5 -right-4 bg-orange-500 text-white text-[8px] leading-tight rounded-full px-[4px] py-[1px] font-bold">
+            <Image src="/message.svg" alt="message" height={24} width={24} />
+            <span className="absolute -top-1.5 -right-3 bg-orange-500 text-white text-[8px] leading-tight rounded-full px-[4px] py-[1px] font-bold">
               99+
             </span>
           </div>
 
           <div className="relative flex items-center">
-            <Bell className="w-5 h-5 text-pink-600" />
+            <Image src="/c.svg" alt="c" width={24} height={24} />
             <span className="absolute -top-1.5 -right-3 bg-orange-500 text-white text-[8px] leading-tight rounded-full px-[4px] py-[1px] font-bold">
               99+
             </span>

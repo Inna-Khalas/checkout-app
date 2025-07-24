@@ -20,7 +20,12 @@ const schema = yup.object({
     .of(
       yup.object({
         location: yup.string().required("Required"),
-        time: yup.string(),
+        time: yup
+          .string()
+          .matches(
+            /^([01]\d|2[0-3]):([0-5]\d)$/,
+            "Time must be in HH:MM format"
+          ),
       })
     )
     .min(2, "Minimum two points required"),
@@ -35,7 +40,10 @@ const schema = yup.object({
     unit: yup.string(),
   }),
   name: yup.string().required(),
-  phone: yup.string().required(),
+  phone: yup
+    .string()
+    .required()
+    .matches(/^\d{8,12}$/, "Phone number must be 8–12 digits"),
   email: yup.string().email("Invalid email").required("Email is required"),
   company: yup.string(),
   forwarding: yup.boolean(),
