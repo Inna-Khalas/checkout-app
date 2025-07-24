@@ -21,7 +21,7 @@ This is a responsive checkout application for a transportation service, with rou
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/checkout-app.git
+git clone https://github.com/Inna-Khalas/checkout-app.git
 cd checkout-app
 ```
 
@@ -51,7 +51,9 @@ App will be running at [http://localhost:3000](http://localhost:3000)
 app/
   checkout/
     page.tsx           - main page
-    order/sidebar/     - mobile OrderSidebar page
+    order-sidebar/
+          page.tsx
+   - mobile OrderSidebar page
 components/
   Header.tsx
   Footer.tsx
